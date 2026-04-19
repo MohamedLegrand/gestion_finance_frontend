@@ -1,20 +1,39 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { scrollToTop, scrollToElement } = useScrollToTop();
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+  const handleNavigation = (path, sectionId = null) => {
+    // Si on est sur la page d'accueil et qu'on veut scroller vers une section
+    if (location.pathname === "/" && sectionId) {
+      scrollToElement(sectionId);
+    } 
+    // Si on est sur une autre page et qu'on veut aller à l'accueil + scroller
+    else if (location.pathname !== "/" && sectionId) {
+      navigate("/");
+      // Attendre que la page d'accueil soit chargée avant de scroller
+      setTimeout(() => {
+        scrollToElement(sectionId);
+      }, 100);
+    }
+    // Navigation simple vers une page
+    else {
+      navigate(path);
     }
     setMenuOpen(false);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleScrollToTop = () => {
+    if (location.pathname === "/") {
+      scrollToTop();
+    } else {
+      navigate("/");
+    }
     setMenuOpen(false);
   };
 
@@ -30,7 +49,7 @@ const Header = () => {
 
           {/* Logo + Nom */}
           <button
-            onClick={scrollToTop}
+            onClick={handleScrollToTop}
             className="flex items-center gap-4 cursor-pointer group"
           >
             <img
@@ -51,19 +70,19 @@ const Header = () => {
           {/* Navigation desktop */}
           <nav className="hidden md:flex items-center gap-2">
             <button
-              onClick={scrollToTop}
+              onClick={handleScrollToTop}
               className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 transition-all duration-200 cursor-pointer px-4 py-2.5 rounded-lg"
             >
               Accueil
             </button>
             <button
-              onClick={() => scrollToSection("fonctionnalites")}
+              onClick={() => handleNavigation("/", "fonctionnalites")}
               className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 transition-all duration-200 cursor-pointer px-4 py-2.5 rounded-lg"
             >
               Fonctionnalités
             </button>
             <button
-              onClick={() => scrollToSection("tarifs")}
+              onClick={() => handleNavigation("/", "tarifs")}
               className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 transition-all duration-200 cursor-pointer px-4 py-2.5 rounded-lg"
             >
               Tarifs
@@ -109,19 +128,19 @@ const Header = () => {
       {menuOpen && (
         <div className="md:hidden border-t border-purple-700 bg-purple-900 px-6 py-6 flex flex-col gap-2">
           <button
-            onClick={scrollToTop}
+            onClick={handleScrollToTop}
             className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 py-3 px-4 rounded-lg transition-all text-left cursor-pointer"
           >
             Accueil
           </button>
           <button
-            onClick={() => scrollToSection("fonctionnalites")}
+            onClick={() => handleNavigation("/", "fonctionnalites")}
             className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 py-3 px-4 rounded-lg transition-all text-left cursor-pointer"
           >
             Fonctionnalités
           </button>
           <button
-            onClick={() => scrollToSection("tarifs")}
+            onClick={() => handleNavigation("/", "tarifs")}
             className="text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-700 py-3 px-4 rounded-lg transition-all text-left cursor-pointer"
           >
             Tarifs
@@ -152,4 +171,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Hea
