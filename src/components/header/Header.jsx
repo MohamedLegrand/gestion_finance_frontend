@@ -184,12 +184,12 @@ const Header = () => {
               onClick={() => navigateTo("/register")}
               className="text-sm font-semibold text-purple-800 bg-white hover:bg-purple-50 py-3 text-center rounded-xl transition-all cursor-pointer shadow-md"
             >
-              S'inscrire gratuitement
+              S'inscrire
             </button>
           </div>
         </div>
       )}
-    </header>
+    </header> 
   );
 };
 
