@@ -171,4 +171,4 @@ const Header = () => {
   );
 };
 
-export default Hea
+export default Header
