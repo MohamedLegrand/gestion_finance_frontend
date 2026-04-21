@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -17,7 +18,7 @@ import Contact from "./pages/contact/Contact";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL || "/"}>
       <ScrollToTop />
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <Header />
