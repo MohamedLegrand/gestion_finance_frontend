@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('');
+  const [logoError, setLogoError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { scrollToTop, scrollToElement } = useScrollToTop();
+
+  useEffect(() => {
+    // Déterminer le chemin de base selon l'environnement
+    const basePath = process.env.PUBLIC_URL || '';
+    const imgPath = `${basePath}/images/logo.jpg`;
+    setLogoUrl(imgPath);
+    
+    // Précharger le logo
+    const img = new Image();
+    img.src = imgPath;
+    img.onerror = () => setLogoError(true);
+  }, []);
 
   const handleNavigation = (path, sectionId = null) => {
     // Si on est sur la page d'accueil et qu'on veut scroller vers une section
@@ -52,11 +66,18 @@ const Header = () => {
             onClick={handleScrollToTop}
             className="flex items-center gap-4 cursor-pointer group"
           >
-            <img
-              src="/images/logo.jpg"
-              alt="MyNkap Logo"
-              className="h-14 w-14 rounded-full object-cover border-2 border-purple-300 group-hover:border-white transition-colors duration-200"
-            />
+            {!logoError && logoUrl ? (
+              <img
+                src={logoUrl}
+                alt="MyNkap Logo"
+                className="h-14 w-14 rounded-full object-cover border-2 border-purple-300 group-hover:border-white transition-colors duration-200"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <div className="h-14 w-14 rounded-full bg-purple-600 border-2 border-purple-300 group-hover:border-white transition-colors duration-200 flex items-center justify-center">
+                <span className="text-white font-bold text-xl">M</span>
+              </div>
+            )}
             <div className="flex flex-col items-start">
               <span className="text-2xl font-black text-white tracking-tight leading-tight">
                 MyNkap
@@ -115,6 +136,7 @@ const Header = () => {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden flex flex-col gap-2 p-3 rounded-xl hover:bg-purple-700 transition-colors"
+            aria-label="Menu"
           >
             <span className={`block w-7 h-0.5 bg-white transition-transform duration-300 ${menuOpen ? "rotate-45 translate-y-2.5" : ""}`} />
             <span className={`block w-7 h-0.5 bg-white transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
@@ -171,4 +193,4 @@ const Header = () => {
   );
 };
 
-export default Header
+export default Header;

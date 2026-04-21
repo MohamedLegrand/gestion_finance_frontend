@@ -1,7 +1,80 @@
+// src/components/Footer.jsx
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Footer = () => {
   const annee = new Date().getFullYear();
+  const [socialIcons, setSocialIcons] = useState({
+    facebook: '',
+    whatsapp: '',
+    github: '',
+    linkedin: ''
+  });
+  const [logoUrl, setLogoUrl] = useState('');
+  const [iconsError, setIconsError] = useState({
+    facebook: false,
+    whatsapp: false,
+    github: false,
+    linkedin: false
+  });
+
+  useEffect(() => {
+    // Déterminer le chemin de base selon l'environnement
+    const basePath = process.env.PUBLIC_URL || '';
+    
+    // Charger le logo
+    setLogoUrl(`${basePath}/images/logo.jpg`);
+    
+    // Charger les icônes des réseaux sociaux
+    const socialPaths = {
+      facebook: `${basePath}/images/icones/facebook.jpg`,
+      whatsapp: `${basePath}/images/icones/whatsapp.jpg`,
+      github: `${basePath}/images/icones/github.jpg`,
+      linkedin: `${basePath}/images/icones/linkedin.jpg`
+    };
+    
+    setSocialIcons(socialPaths);
+    
+    // Précharger les icônes pour détecter les erreurs
+    Object.entries(socialPaths).forEach(([key, path]) => {
+      const img = new Image();
+      img.src = path;
+      img.onerror = () => {
+        setIconsError(prev => ({ ...prev, [key]: true }));
+      };
+    });
+  }, []);
+
+  // Composant d'icône avec fallback
+  const SocialIcon = ({ iconKey, href, label }) => {
+    if (iconsError[iconKey] || !socialIcons[iconKey]) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200"
+        >
+          <span className="text-white text-sm font-bold">{label.charAt(0)}</span>
+        </a>
+      );
+    }
+    
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200 overflow-hidden"
+      >
+        <img 
+          src={socialIcons[iconKey]} 
+          alt={label}
+          className="w-full h-full object-cover"
+        />
+      </a>
+    );
+  };
 
   return (
     <footer className="bg-purple-950 text-white">
@@ -13,11 +86,17 @@ const Footer = () => {
           {/* Colonne 1 — Logo + description */}
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3">
-              <img
-                src="/images/logo.jpg"
-                alt="MyNkap Logo"
-                className="h-9 w-9 rounded-full object-cover"
-              />
+              {logoUrl && (
+                <img
+                  src={logoUrl}
+                  alt="MyNkap Logo"
+                  className="h-9 w-9 rounded-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML += '<span className="text-xl font-bold tracking-tight">MyNkap</span>';
+                  }}
+                />
+              )}
               <span className="text-xl font-bold tracking-tight">
                 MyNkap
               </span>
@@ -28,59 +107,28 @@ const Footer = () => {
               au quotidien.
             </p>
 
-            {/* Réseaux sociaux avec images */}
+            {/* Réseaux sociaux */}
             <div className="flex items-center gap-4 mt-2">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200 overflow-hidden"
-              >
-                <img 
-                  src="/public/images/icones/facebook.jpg" 
-                  alt="Facebook"
-                  className="w-full h-full object-cover"
-                />
-              </a>
-              
-              <a
-                href="https://whatsapp.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200 overflow-hidden"
-              >
-                <img 
-                  src="/public/images/icones/whatsapp.jpg" 
-                  alt="WhatsApp"
-                  className="w-full h-full object-cover"
-                />
-              </a>
-              
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200 overflow-hidden"
-              >
-                <img 
-                  src="/public/images/icones/github.jpg" 
-                  alt="GitHub"
-                  className="w-full h-full object-cover"
-                />
-              </a>
-              
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-purple-800 hover:bg-purple-600 flex items-center justify-center transition-colors duration-200 overflow-hidden"
-              >
-                <img 
-                  src="/public/images/icones/linkedin.jpg" 
-                  alt="LinkedIn"
-                  className="w-full h-full object-cover"
-                />
-              </a>
+              <SocialIcon
+                iconKey="facebook"
+                href="https://facebook.com/mynkap"
+                label="Facebook"
+              />
+              <SocialIcon
+                iconKey="whatsapp"
+                href="https://wa.me/237677246900"
+                label="WhatsApp"
+              />
+              <SocialIcon
+                iconKey="github"
+                href="https://github.com/mynkap"
+                label="GitHub"
+              />
+              <SocialIcon
+                iconKey="linkedin"
+                href="https://linkedin.com/company/mynkap"
+                label="LinkedIn"
+              />
             </div>
           </div>
 
