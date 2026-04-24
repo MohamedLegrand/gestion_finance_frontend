@@ -57,7 +57,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-purple-800 sticky top-0 z-50 shadow-lg">
+    <header className="w-full bg-purple-800 shadow-lg">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="flex items-center justify-between h-24">
 
@@ -189,7 +189,7 @@ const Header = () => {
           </div>
         </div>
       )}
-    </header> 
+    </header>
   );
 };
 

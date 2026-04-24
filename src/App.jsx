@@ -1,7 +1,6 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
+import SmartLayout from "./components/smartlayout/SmartLayout";
 import ScrollToTop from "./components/scrolltotop/ScrollToTop"; 
 
 // Importez vos pages/components depuis leurs dossiers respectifs
@@ -16,28 +15,32 @@ import Conditions from "./pages/conditions/Conditions";
 import Cookies from "./pages/cookies/Cookies";
 import Contact from "./pages/contact/Contact";
 
+
+// Composant principal de l'application
+import Dashboard from "./pages/dashboard/Dashboard";
+
 function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL || "/"}>
       <ScrollToTop />
-      <div className="min-h-screen bg-slate-50 flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Accueil />} />
-            <Route path="/apropos" element={<Apropos />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+      <SmartLayout>
+        <Routes>
+          <Route path="/" element={<Accueil />} />
+          <Route path="/apropos" element={<Apropos />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-            {/* Footer pages */}
-            <Route path="/confidentialite" element={<Confidentialite />} />
-            <Route path="/conditions" element={<Conditions />} />
-            <Route path="/cookies" element={<Cookies />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+          {/* Footer pages */}
+          <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/conditions" element={<Conditions />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/contact" element={<Contact />} />
+
+
+          {/* Dashboard - accessible uniquement après connexion */}
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </SmartLayout>
     </BrowserRouter>
   );
 }

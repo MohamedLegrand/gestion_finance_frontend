@@ -1,3 +1,4 @@
+// src/pages/login/Login.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -49,9 +50,11 @@ const Login = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-        // Sauvegarder les tokens JWT
+        // Sauvegarder les tokens JWT et le username
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
+        localStorage.setItem("username", formData.username); // ← AJOUTÉ
+        
         setSuccessMessage("Connexion réussie ! Redirection...");
         setTimeout(() => navigate("/dashboard"), 2000);
       } else {
@@ -70,11 +73,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-purple-50 flex items-center justify-center px-4 py-12">
-
-      {/* Cadre principal */}
       <div className="w-full max-w-md border-2 border-purple-300 rounded-3xl shadow-2xl overflow-hidden">
-
-        {/* Bandeau violet en haut */}
         <div className="bg-purple-800 px-8 py-8 text-center">
           <div className="flex justify-center mb-4">
             <div className="p-1.5 bg-white rounded-full">
@@ -93,10 +92,7 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Corps du formulaire */}
         <div className="bg-white px-8 py-8">
-
-          {/* Message succès */}
           {successMessage && (
             <div className="mb-6 p-4 bg-green-50 border-2 border-green-300 rounded-xl flex items-center gap-3">
               <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +102,6 @@ const Login = () => {
             </div>
           )}
 
-          {/* Erreur générale */}
           {errors.general && (
             <div className="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-xl flex items-center gap-3">
               <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +111,6 @@ const Login = () => {
             </div>
           )}
 
-          {/* Erreur identifiants invalides */}
           {errors.detail && (
             <div className="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-xl flex items-center gap-3">
               <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,8 +121,6 @@ const Login = () => {
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
-            {/* Username */}
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-bold text-gray-700">
                 Nom d'utilisateur <span className="text-red-500">*</span>
@@ -157,7 +149,6 @@ const Login = () => {
               )}
             </div>
 
-            {/* Mot de passe */}
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-bold text-gray-700">
@@ -210,7 +201,6 @@ const Login = () => {
               )}
             </div>
 
-            {/* Bouton submit */}
             <button
               type="submit"
               disabled={loading}
@@ -233,17 +223,14 @@ const Login = () => {
                 </>
               )}
             </button>
-
           </form>
 
-          {/* Séparateur */}
           <div className="flex items-center gap-3 my-6">
             <div className="flex-1 h-px bg-gray-200" />
             <span className="text-xs text-gray-400 font-medium">OU</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {/* Lien inscription */}
           <p className="text-center text-sm text-gray-500">
             Vous n'avez pas de compte ?{" "}
             <Link
@@ -253,10 +240,8 @@ const Login = () => {
               Créer un compte
             </Link>
           </p>
-
         </div>
 
-        {/* Bandeau bas */}
         <div className="bg-purple-50 border-t-2 border-purple-200 px-8 py-4 text-center">
           <p className="text-xs text-gray-400">
             En vous connectant vous acceptez nos{" "}
@@ -269,7 +254,6 @@ const Login = () => {
             </Link>
           </p>
         </div>
-
       </div>
     </div>
   );
