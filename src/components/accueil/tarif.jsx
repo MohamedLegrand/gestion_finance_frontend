@@ -19,7 +19,8 @@ const Tarif = () => {
       priceMonthly: 0,
       priceYearly: 0,
       currency: "FCFA",
-      icon: "🎁",
+      image: "/images/tarif/cadeau.jpg",
+      imageAlt: "Cadeau - Plan Gratuit",
       description: "Pour démarrer et découvrir MyNkap",
       features: [
         "✅ Jusqu'à 50 transactions par mois",
@@ -44,7 +45,8 @@ const Tarif = () => {
       priceMonthly: 1500,
       priceYearly: 15000,
       currency: "FCFA",
-      icon: "⭐",
+      image: "/images/tarif/etoile.jpg",
+      imageAlt: "Étoile - Plan Premium",
       description: "Pour une gestion financière complète",
       features: [
         "✅ Transactions ILLIMITÉES",
@@ -72,7 +74,8 @@ const Tarif = () => {
       priceMonthly: 3500,
       priceYearly: 35000,
       currency: "FCFA",
-      icon: "🤖",
+      image: "/images/tarif/ia.jpg",
+      imageAlt: "Intelligence Artificielle - Plan Intelligent IA",
       description: "La gestion financière augmentée par l'IA",
       features: [
         "✅ Toutes les fonctionnalités Premium",
@@ -194,9 +197,16 @@ const Tarif = () => {
 
               {/* Contenu */}
               <div className="p-6 md:p-8">
-                {/* Icône et titre */}
+                {/* Image et titre */}
                 <div className="text-center mb-6">
-                  <div className="text-5xl mb-3">{plan.icon}</div>
+                  <div className="mb-4">
+                    <img 
+                      src={plan.image} 
+                      alt={plan.imageAlt}
+                      className="w-24 h-24 object-cover rounded-full mx-auto shadow-md hover:scale-110 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
                   <h3 className="text-2xl font-bold text-gray-800">{plan.nameFr}</h3>
                   <p className="text-sm text-gray-500 mt-1">{plan.description}</p>
                 </div>
@@ -304,43 +314,43 @@ const Tarif = () => {
                   <td className="px-6 py-3 text-center text-gray-500">3 max</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">Illimité</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">Illimité</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-3 text-gray-600">Budgets actifs</td>
                   <td className="px-6 py-3 text-center text-gray-500">1 max</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">Illimité</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">Illimité</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="px-6 py-3 text-gray-600">Export des données</td>
                   <td className="px-6 py-3 text-center text-gray-500">CSV basique</td>
                   <td className="px-6 py-3 text-center text-green-600">CSV + PDF</td>
                   <td className="px-6 py-3 text-center text-green-600">CSV + PDF + Excel</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-3 text-gray-600">Intelligence artificielle</td>
                   <td className="px-6 py-3 text-center text-gray-400">❌</td>
                   <td className="px-6 py-3 text-center text-gray-400">❌</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">✅</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="px-6 py-3 text-gray-600">Assistant virtuel</td>
                   <td className="px-6 py-3 text-center text-gray-400">❌</td>
                   <td className="px-6 py-3 text-center text-gray-400">❌</td>
                   <td className="px-6 py-3 text-center text-green-600 font-semibold">✅</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-3 text-gray-600">Support</td>
                   <td className="px-6 py-3 text-center text-gray-500">Email (48h)</td>
                   <td className="px-6 py-3 text-center text-green-600">Prioritaire (24h)</td>
                   <td className="px-6 py-3 text-center text-green-600">24/7 prioritaire</td>
-                 </tr>
+                </tr>
                 <tr className="border-b border-gray-100 bg-gray-50">
                   <td className="px-6 py-3 text-gray-600">Moyens de paiement</td>
                   <td className="px-6 py-3 text-center text-gray-400">-</td>
                   <td className="px-6 py-3 text-center text-gray-600">Orange Money, MTN, Carte</td>
                   <td className="px-6 py-3 text-center text-gray-600">Orange Money, MTN, Carte</td>
-                 </tr>
+                </tr>
               </tbody>
             </table>
           </div>
