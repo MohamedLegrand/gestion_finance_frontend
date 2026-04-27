@@ -19,6 +19,7 @@ import Contact from "./pages/contact/Contact";
 // Composant principal de l'application
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profil from "./pages/profil/Profil"; 
+import Categories from "./pages/categories/Categories"; 
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           {/* Dashboard - accessible uniquement après connexion */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profil" element={<Profil />} />
+          <Route path="/categories" element={<Categories />} /> 
         </Routes>
       </SmartLayout>
     </BrowserRouter>
