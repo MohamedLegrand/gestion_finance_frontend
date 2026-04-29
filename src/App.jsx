@@ -20,6 +20,10 @@ import Contact from "./pages/contact/Contact";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profil from "./pages/profil/Profil"; 
 import Categories from "./pages/categories/Categories"; 
+import Comptes from "./pages/comptes/Comptes"; 
+import Transactions from "./pages/transactions/Transactions";
+import Transferts from "./pages/transferts/Transferts"; 
+import Budgets from "./pages/budgets/Budgets";
 
 function App() {
   return (
@@ -43,6 +47,10 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/categories" element={<Categories />} /> 
+          <Route path="/comptes" element={<Comptes />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transferts" element={<Transferts />} />
+          <Route path="/budgets" element={<Budgets />} />
         </Routes>
       </SmartLayout>
     </BrowserRouter>
