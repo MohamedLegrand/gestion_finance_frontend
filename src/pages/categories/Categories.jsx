@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import HeaderConnected from "../../components/headerconnected/HeaderConnected";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -179,8 +178,6 @@ const Categories = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <HeaderConnected />
-
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10">
 
         {/* Entête */}
